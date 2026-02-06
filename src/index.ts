@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { defineCommand, runMain } from "citty";
+import { defineCommand, renderUsage, runMain } from "citty";
 import { z } from "zod";
 import { glance } from "./tools/glance.js";
 
@@ -45,18 +45,22 @@ const main = defineCommand({
     depth: {
       type: "string",
       description: "Max directory depth (default: 10)",
+      valueHint: "number",
     },
     symbols: {
       type: "boolean",
-      description: "Include code symbols",
+      description: "Include code symbols (default: auto)",
+      negativeDescription: "Exclude code symbols",
     },
     comments: {
       type: "boolean",
-      description: "Include doc comments",
+      description: "Include doc comments (default: auto)",
+      negativeDescription: "Exclude doc comments",
     },
     ignore: {
       type: "string",
       description: "Ignore pattern (repeatable)",
+      valueHint: "pattern",
     },
   },
   async run({ args }) {
@@ -87,4 +91,44 @@ const main = defineCommand({
   },
 });
 
-runMain(main);
+const noColor = process.env.NO_COLOR === "1" || process.env.TERM === "dumb";
+
+const fmt = {
+  bold: (s: string) => (noColor ? s : `\x1B[1m${s}\x1B[22m`),
+  underline: (s: string) => (noColor ? s : `\x1B[4m${s}\x1B[24m`),
+};
+
+const header = (s: string) => fmt.underline(fmt.bold(s));
+
+async function customShowUsage<
+  T extends import("citty").ArgsDef = import("citty").ArgsDef,
+>(
+  cmd: import("citty").CommandDef<T>,
+  parent?: import("citty").CommandDef<T>,
+): Promise<void> {
+  const usage = await renderUsage(cmd, parent);
+
+  const sections = [
+    usage,
+    "",
+    header("EXAMPLES"),
+    "",
+    "  glance .                        Scan current directory",
+    "  glance src/                     Scan specific directory",
+    "  glance src/index.ts             Parse specific file",
+    "  glance src/ lib/                Multiple paths",
+    "  glance --depth 2 .              Limit directory depth",
+    "  glance --no-symbols .           Directory tree only",
+    '  glance --ignore "*.test.ts" .   Exclude test files',
+    "",
+    header("SUPPORTED LANGUAGES"),
+    "",
+    "  TypeScript, JavaScript, Python, Go, PHP, Rust, Java, C#,",
+    "  Ruby, Kotlin, Swift, C/C++",
+    "",
+  ];
+
+  console.log(sections.join("\n"));
+}
+
+runMain(main, { showUsage: customShowUsage });

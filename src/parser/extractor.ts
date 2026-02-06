@@ -17,14 +17,14 @@ export function extractSymbols(
   // Collect base names with .name variants
   const hasNameCapture = new Set<string>();
   for (const capture of captures) {
-    if (capture.name.endsWith('.name')) {
+    if (capture.name.endsWith(".name")) {
       hasNameCapture.add(capture.name.slice(0, -5));
     }
   }
 
   // Filter: keep .name captures + standalone captures (TypeScript-style)
-  const relevantCaptures = captures.filter(capture => {
-    if (capture.name.endsWith('.name')) return true;
+  const relevantCaptures = captures.filter((capture) => {
+    if (capture.name.endsWith(".name")) return true;
     return !hasNameCapture.has(capture.name); // skip outer when .name exists
   });
 
@@ -44,7 +44,7 @@ export function extractSymbols(
     if (!name) continue;
 
     // Extract base kind name (remove .name suffix if present)
-    const kindName = captureName.endsWith('.name')
+    const kindName = captureName.endsWith(".name")
       ? captureName.slice(0, -5)
       : captureName;
 

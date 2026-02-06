@@ -83,7 +83,9 @@ export class DirectoryWalker {
 
         const fullPath = join(dirPath, entry.name);
         const relativePath = relative(this.rootPath, fullPath);
-        const checkPath = entry.isDirectory() ? `${relativePath}/` : relativePath;
+        const checkPath = entry.isDirectory()
+          ? `${relativePath}/`
+          : relativePath;
 
         // Check if should be ignored
         if (this.ignoreManager.shouldIgnore(checkPath)) {
