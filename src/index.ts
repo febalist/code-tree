@@ -60,14 +60,8 @@ const main = defineCommand({
     },
   },
   async run({ args }) {
-    const result = CliArgsSchema.safeParse(args);
-    if (!result.success) {
-      const messages = result.error.issues.map((i) => i.message).join("; ");
-      console.error(`Error: ${messages}`);
-      process.exit(1);
-    }
-
-    const { paths, depth, symbols, comments, ignore } = result.data;
+    const { paths, depth, symbols, comments, ignore } =
+      CliArgsSchema.parse(args);
 
     const outputs: string[] = [];
     let hasError = false;
