@@ -2,7 +2,7 @@
 
 import { defineCommand, renderUsage, runMain } from "citty";
 import { z } from "zod";
-import { glance } from "./tools/glance.js";
+import { codeTree } from "./tools/code-tree.js";
 
 const CliArgsSchema = z
   .object({
@@ -31,7 +31,7 @@ const CliArgsSchema = z
 
 const main = defineCommand({
   meta: {
-    name: "glance",
+    name: "code-tree",
     version: "0.1.0",
     description:
       "Scan project structure and extract code symbols (classes, functions, etc.)",
@@ -72,7 +72,13 @@ const main = defineCommand({
 
     for (const path of paths) {
       try {
-        const output = await glance({ path, depth, symbols, comments, ignore });
+        const output = await codeTree({
+          path,
+          depth,
+          symbols,
+          comments,
+          ignore,
+        });
         outputs.push(output);
       } catch (error) {
         hasError = true;
@@ -113,13 +119,13 @@ async function customShowUsage<
     "",
     header("EXAMPLES"),
     "",
-    "  glance .                        Scan current directory",
-    "  glance src/                     Scan specific directory",
-    "  glance src/index.ts             Parse specific file",
-    "  glance src/ lib/                Multiple paths",
-    "  glance --depth 2 .              Limit directory depth",
-    "  glance --no-symbols .           Directory tree only",
-    '  glance --ignore "*.test.ts" .   Exclude test files',
+    "  code-tree .                        Scan current directory",
+    "  code-tree src/                     Scan specific directory",
+    "  code-tree src/index.ts             Parse specific file",
+    "  code-tree src/ lib/                Multiple paths",
+    "  code-tree --depth 2 .              Limit directory depth",
+    "  code-tree --no-symbols .           Directory tree only",
+    '  code-tree --ignore "*.test.ts" .   Exclude test files',
     "",
     header("SUPPORTED LANGUAGES"),
     "",

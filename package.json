@@ -1,14 +1,14 @@
 {
-  "name": "glance-mcp",
+  "name": "code-tree",
   "version": "0.1.0",
   "type": "module",
   "main": "src/index.ts",
   "bin": {
-    "glance": "src/index.ts"
+    "code-tree": "src/index.ts"
   },
   "scripts": {
     "start": "bun run src/index.ts",
-    "build": "bun build src/index.ts --compile --outfile glance",
+    "build": "bun build src/index.ts --compile --outfile code-tree",
     "format": "biome check --write",
     "check": "biome check && tsc --noEmit"
   },

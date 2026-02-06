@@ -1,4 +1,4 @@
-# glance
+# code-tree
 
 A CLI tool for quickly exploring project structure and codebase.
 

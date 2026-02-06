@@ -7,7 +7,7 @@ import type { FileSymbols } from "../parser/types.js";
 import { DirectoryWalker, type WalkEntry } from "../scanner/walker.js";
 import "../parser/queries/index.js"; // Register all languages
 
-export interface GlanceOptions {
+export interface CodeTreeOptions {
   path: string;
   depth?: number | null;
   symbols?: boolean | null;
@@ -20,7 +20,7 @@ const MAX_ENTRIES = 2000;
 const MAX_FILES_TO_PARSE = 500;
 const AUTO_COMMENTS_THRESHOLD = 5000; // characters
 
-export async function glance(options: GlanceOptions): Promise<string> {
+export async function codeTree(options: CodeTreeOptions): Promise<string> {
   const absolutePath = resolve(options.path);
 
   // Check if path exists
@@ -45,7 +45,7 @@ export async function glance(options: GlanceOptions): Promise<string> {
 
 async function handleFile(
   filePath: string,
-  options: GlanceOptions,
+  options: CodeTreeOptions,
 ): Promise<string> {
   const includeComments = options.comments ?? true; // Auto: true for files
 
@@ -64,7 +64,7 @@ async function handleFile(
 async function handleDirectory(
   dirPath: string,
   depth: number,
-  options: GlanceOptions,
+  options: CodeTreeOptions,
 ): Promise<string> {
   const walker = new DirectoryWalker(dirPath, {
     maxDepth: depth,
