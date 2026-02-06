@@ -127,13 +127,58 @@ export function extractSymbols(
 }
 
 function getNodeSignature(node: Node, source: string): string {
-  // Try to get full signature from first line
+  // Try to get full signature - may span multiple lines
   const startPos = node.startPosition;
+  const endPos = node.endPosition;
   const lines = source.split("\n");
-  let signature = lines[startPos.row] || "";
 
-  // Clean up signature
-  signature = signature.trim();
+  // Collect lines from start to end or until we hit { outside of parameters
+  const signatureLines: string[] = [];
+  let parenDepth = 0;
+
+  for (let i = startPos.row; i <= Math.min(endPos.row, startPos.row + 5); i++) {
+    const line = lines[i] || "";
+    let stopIndex = -1;
+
+    // Track parentheses and braces
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      if (char === "(") parenDepth++;
+      else if (char === ")") parenDepth--;
+      else if (char === "{" && parenDepth === 0) {
+        // Found { outside of parameters - stop here
+        stopIndex = j;
+        break;
+      }
+    }
+
+    if (stopIndex !== -1) {
+      signatureLines.push(line.slice(0, stopIndex));
+      break;
+    }
+
+    signatureLines.push(line);
+
+    // Stop if we closed all parens
+    if (parenDepth === 0 && line.includes(")")) {
+      break;
+    }
+  }
+
+  // Join and clean up
+  let signature = signatureLines.join(" ").trim();
+
+  // Remove trailing { and : and ,
+  signature = signature.replace(/\s*[{:,]\s*$/, "");
+
+  // Normalize whitespace
+  signature = signature.replace(/\s+/g, " ");
+
+  // Remove trailing comma before closing paren
+  signature = signature.replace(/,\s*\)/g, ")");
+
+  // Clean up spaces around parentheses
+  signature = signature.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
 
   // Limit length
   if (signature.length > 200) {

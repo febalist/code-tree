@@ -6,6 +6,11 @@ export interface DirectoryFormatterOptions {
   includeComments: boolean;
 }
 
+const BRANCH = "├── "; // for non-last elements
+const LAST = "└── "; // for last element
+const PIPE = "│   "; // continuation from non-last ancestor
+const SPACE = "    "; // empty space after last ancestor
+
 export function formatDirectory(
   result: WalkResult,
   fileSymbolsMap: Map<string, FileSymbols>,
@@ -13,36 +18,51 @@ export function formatDirectory(
 ): string {
   const lines: string[] = [];
 
-  function formatEntry(entry: WalkEntry, indent: string = "") {
+  function formatEntry(
+    entry: WalkEntry,
+    prefix: string = "",
+    isLast: boolean = true,
+    isRoot: boolean = false,
+  ) {
     const isDir = entry.isDirectory;
     const displayName = isDir ? `${entry.name}/` : entry.name;
 
-    lines.push(`${indent}${displayName}`);
+    // Root element without connector, others with connectors
+    if (isRoot) {
+      lines.push(displayName);
+    } else {
+      lines.push(`${prefix}${isLast ? LAST : BRANCH}${displayName}`);
+    }
 
     // Add symbols if this is a file and symbols are enabled
     if (!isDir && options.includeSymbols && fileSymbolsMap.has(entry.path)) {
       const fileSymbols = fileSymbolsMap.get(entry.path);
       if (fileSymbols) {
-        const symbolIndent = `${indent}  `;
+        // Symbols without tree connectors, only line continuation
+        const symbolPrefix = isRoot ? "" : `${prefix}${isLast ? SPACE : PIPE}`;
         formatSymbols(
           fileSymbols.symbols,
-          symbolIndent,
+          symbolPrefix,
           options.includeComments,
         );
       }
     }
 
     if (entry.children && entry.children.length > 0) {
-      const childIndent = `${indent}  `;
-      for (const child of entry.children) {
-        formatEntry(child, childIndent);
+      // For root children, start with empty prefix, for others extend with PIPE/SPACE
+      const childPrefix = isRoot ? "" : `${prefix}${isLast ? SPACE : PIPE}`;
+      for (let i = 0; i < entry.children.length; i++) {
+        const child = entry.children[i];
+        if (!child) continue;
+        const childIsLast = i === entry.children.length - 1;
+        formatEntry(child, childPrefix, childIsLast, false);
       }
     }
   }
 
   function formatSymbols(
     symbols: CodeSymbol[],
-    indent: string,
+    prefix: string,
     includeComments: boolean,
   ) {
     for (const symbol of symbols) {
@@ -50,7 +70,7 @@ export function formatDirectory(
       if (includeComments && symbol.docblock) {
         const docLines = symbol.docblock.split("\n");
         for (const line of docLines) {
-          lines.push(`${indent}/// ${line}`);
+          lines.push(`${prefix}  /// ${line}`);
         }
       }
 
@@ -65,16 +85,17 @@ export function formatDirectory(
         display = symbol.signature;
       }
 
-      lines.push(`${indent}${display}`);
+      // Symbols with additional indent, without tree connectors
+      lines.push(`${prefix}  ${display}`);
 
       // Add children (methods in classes, etc.)
       if (symbol.children && symbol.children.length > 0) {
-        formatSymbols(symbol.children, `${indent}  `, includeComments);
+        formatSymbols(symbol.children, `${prefix}  `, includeComments);
       }
     }
   }
 
-  formatEntry(result.root);
+  formatEntry(result.root, "", true, true);
 
   if (result.truncated) {
     lines.push("");

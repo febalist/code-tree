@@ -63,18 +63,19 @@ bun run src/index.ts --help
 **Directory with symbols:**
 ```
 src/
-  index.ts
-    async run({ args }) {
-  parser/
-    index.ts
-      class ParserManager
-        constructor() {
-        async init() {
-        async parseFile(filePath: string): Promise<FileSymbols | null> {
-    types.ts
-      type SymbolKind
-      interface CodeSymbol
-      interface FileSymbols
+├── index.ts
+│     async run(args)
+├── parser/
+│   ├── index.ts
+│   │     class ParserManager
+│   │       constructor()
+│   │       async init()
+│   │       private async loadLanguage(config: LanguageConfig): Promise<Language>
+│   │       async parseFile(filePath: string): Promise<FileSymbols | null>
+│   └── types.ts
+│         type SymbolKind
+│         interface CodeSymbol
+│         interface FileSymbols
 ```
 
 **File with detailed breakdown:**
@@ -82,10 +83,10 @@ src/
 src/parser/index.ts
 
   class ParserManager
-    constructor() {
-    async init() {
-    private async loadLanguage(config: LanguageConfig): Promise<Language> {
-    async parseFile(filePath: string): Promise<FileSymbols | null> {
+    constructor()
+    async init()
+    private async loadLanguage(config: LanguageConfig): Promise<Language>
+    async parseFile(filePath: string): Promise<FileSymbols | null>
 ```
 
 ## Supported Languages
