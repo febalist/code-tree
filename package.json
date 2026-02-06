@@ -4,7 +4,7 @@
   "type": "module",
   "main": "src/index.ts",
   "bin": {
-    "glance-mcp": "src/index.ts"
+    "glance": "src/index.ts"
   },
   "scripts": {
     "start": "bun run src/index.ts",
@@ -12,7 +12,7 @@
     "check": "biome check && tsc --noEmit"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.26.0",
+    "citty": "^0.2.0",
     "ignore": "^7.0.5",
     "tree-sitter-wasms": "^0.1.11",
     "web-tree-sitter": "~0.25.10"
