@@ -106,7 +106,8 @@ async function customShowUsage<
   cmd: import("citty").CommandDef<T>,
   parent?: import("citty").CommandDef<T>,
 ): Promise<void> {
-  const usage = await renderUsage(cmd, parent);
+  const usage = (await renderUsage(cmd, parent))
+    .replace("[PATH]", "[PATH...]");
 
   const sections = [
     usage,
