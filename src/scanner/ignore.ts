@@ -2,28 +2,19 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import ignore from "ignore";
 
-const HARDCODED_IGNORES = [".*/", ".git", ".svn", ".hg", ".DS_Store"];
+const HARDCODED_IGNORES = [".*/", ".DS_Store"];
 
 const DEFAULT_IGNORES = [
   "node_modules",
   "vendor",
   "__pycache__",
-  ".tox",
   "venv",
-  ".venv",
   "dist",
   "build",
-  ".next",
-  ".nuxt",
-  ".cache",
   "target",
   "bin",
   "obj",
-  ".idea",
-  ".vscode",
   "coverage",
-  ".terraform",
-  ".output",
 ];
 
 export class IgnoreManager {

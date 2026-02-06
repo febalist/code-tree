@@ -14,10 +14,24 @@ export function extractSymbols(
   const query = new Query(tree.language, config.queryString);
   const captures = query.captures(tree.rootNode);
 
+  // Collect base names with .name variants
+  const hasNameCapture = new Set<string>();
+  for (const capture of captures) {
+    if (capture.name.endsWith('.name')) {
+      hasNameCapture.add(capture.name.slice(0, -5));
+    }
+  }
+
+  // Filter: keep .name captures + standalone captures (TypeScript-style)
+  const relevantCaptures = captures.filter(capture => {
+    if (capture.name.endsWith('.name')) return true;
+    return !hasNameCapture.has(capture.name); // skip outer when .name exists
+  });
+
   // Group captures by parent nodes
   const symbolMap = new Map<number, CodeSymbol>();
 
-  for (const capture of captures) {
+  for (const capture of relevantCaptures) {
     // Captured node is the name, get the parent declaration
     const nameNode = capture.node;
     const declNode = nameNode.parent;
@@ -29,29 +43,34 @@ export function extractSymbols(
     const name = nameNode.text;
     if (!name) continue;
 
+    // Extract base kind name (remove .name suffix if present)
+    const kindName = captureName.endsWith('.name')
+      ? captureName.slice(0, -5)
+      : captureName;
+
     // Determine kind from capture name
     let kind: SymbolKind = "function";
-    if (captureName === "class") {
+    if (kindName === "class") {
       kind = "class";
-    } else if (captureName === "interface") {
+    } else if (kindName === "interface") {
       kind = "interface";
-    } else if (captureName === "function") {
+    } else if (kindName === "function") {
       kind = "function";
-    } else if (captureName === "method") {
+    } else if (kindName === "method") {
       kind = "method";
-    } else if (captureName === "type") {
+    } else if (kindName === "type") {
       kind = "type";
-    } else if (captureName === "enum") {
+    } else if (kindName === "enum") {
       kind = "enum";
-    } else if (captureName === "namespace" || captureName === "module") {
+    } else if (kindName === "namespace" || kindName === "module") {
       kind = "namespace";
-    } else if (captureName === "struct") {
+    } else if (kindName === "struct") {
       kind = "struct";
-    } else if (captureName === "trait") {
+    } else if (kindName === "trait") {
       kind = "trait";
-    } else if (captureName === "constant") {
+    } else if (kindName === "constant") {
       kind = "constant";
-    } else if (captureName === "package") {
+    } else if (kindName === "package") {
       kind = "package";
     }
 
@@ -90,7 +109,7 @@ export function extractSymbols(
   const rootSymbols: CodeSymbol[] = [];
   const nodeParents = new Map<number, number>();
 
-  for (const capture of captures) {
+  for (const capture of relevantCaptures) {
     const nameNode = capture.node;
     const declNode = nameNode.parent;
     if (!declNode) continue;

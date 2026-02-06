@@ -9,12 +9,12 @@ const query = `
 
 (type_declaration
   (type_spec
-    name: (type_identifier) @type.name
+    name: (type_identifier) @struct.name
     type: (struct_type))) @struct
 
 (type_declaration
   (type_spec
-    name: (type_identifier) @type.name
+    name: (type_identifier) @interface.name
     type: (interface_type))) @interface
 
 (package_clause

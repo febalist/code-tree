@@ -12,7 +12,7 @@ const query = `
 
 (variable_declarator
   name: (identifier) @function.name
-  value: [(arrow_function) (function)]) @function
+  value: [(arrow_function) (function_expression)]) @function
 `;
 
 registerLanguage({
