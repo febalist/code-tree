@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { extname } from "node:path";
 import { Language, Parser as TreeSitter } from "web-tree-sitter";
 import { extractSymbols } from "./extractor.js";
 import { getLanguageByExtension, type LanguageConfig } from "./languages.js";
@@ -44,7 +45,7 @@ export class ParserManager {
 
   async parseFile(filePath: string): Promise<FileSymbols | null> {
     // Get language by file extension
-    const ext = `.${filePath.split(".").pop()}`;
+    const ext = extname(filePath);
     const config = getLanguageByExtension(ext);
 
     if (!config) {

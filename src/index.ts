@@ -2,6 +2,7 @@
 
 import { defineCommand, renderUsage, runMain } from "citty";
 import { z } from "zod";
+import { ParserManager } from "./parser/index.js";
 import { codeTree } from "./tools/code-tree.js";
 
 const CliArgsSchema = z
@@ -70,6 +71,10 @@ const main = defineCommand({
     const outputs: string[] = [];
     let hasError = false;
 
+    // Create and initialize parser once for reuse across multiple paths
+    const parser = new ParserManager();
+    await parser.init();
+
     for (const path of paths) {
       try {
         const output = await codeTree({
@@ -78,6 +83,7 @@ const main = defineCommand({
           symbols,
           comments,
           ignore,
+          parser,
         });
         outputs.push(output);
       } catch (error) {

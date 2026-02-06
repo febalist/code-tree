@@ -10,6 +10,9 @@ export function extractSymbols(
 ): CodeSymbol[] {
   const _symbols: CodeSymbol[] = [];
 
+  // Split source into lines once for reuse
+  const lines = source.split("\n");
+
   // Parse query
   const query = new Query(tree.language, config.queryString);
   const captures = query.captures(tree.rootNode);
@@ -77,7 +80,7 @@ export function extractSymbols(
     // Extract signature (for functions/methods)
     let signature = "";
     if (kind === "function" || kind === "method") {
-      signature = getNodeSignature(declNode, source);
+      signature = getNodeSignature(declNode, lines);
     }
 
     // Extract docblock
@@ -145,11 +148,10 @@ export function extractSymbols(
   return rootSymbols;
 }
 
-function getNodeSignature(node: Node, source: string): string {
+function getNodeSignature(node: Node, lines: string[]): string {
   // Try to get full signature - may span multiple lines
   const startPos = node.startPosition;
   const endPos = node.endPosition;
-  const lines = source.split("\n");
 
   // Collect lines from start to end or until we hit { outside of parameters
   const signatureLines: string[] = [];
@@ -253,13 +255,30 @@ function extractDocblock(
 }
 
 function getVisibility(node: Node, _source: string): CodeSymbol["visibility"] {
-  // Check for visibility modifiers
-  const text = node.text;
+  // Check direct children for visibility modifiers
+  for (let i = 0; i < node.childCount; i++) {
+    const child = node.child(i);
+    if (!child) continue;
+    const type = child.type;
+    if (type === "accessibility_modifier" || type === "visibility_modifier") {
+      const text = child.text;
+      if (text === "private") return "private";
+      if (text === "protected") return "protected";
+      if (text === "public") return "public";
+    }
+    // Check for export keyword
+    if (type === "export") return "export";
+    // Stop at function body
+    if (type === "statement_block" || type === "block" || type === "class_body")
+      break;
+  }
 
-  if (/\bprivate\b/.test(text)) return "private";
-  if (/\bprotected\b/.test(text)) return "protected";
-  if (/\bpublic\b/.test(text)) return "public";
-  if (/\bexport\b/.test(text)) return "export";
+  // Fallback: check first line of declaration text
+  const firstLine = node.text.split("\n")[0] || "";
+  if (/\bexport\b/.test(firstLine)) return "export";
+  if (/\bprivate\b/.test(firstLine)) return "private";
+  if (/\bprotected\b/.test(firstLine)) return "protected";
+  if (/\bpublic\b/.test(firstLine)) return "public";
 
   return undefined;
 }

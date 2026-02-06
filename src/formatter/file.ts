@@ -1,4 +1,5 @@
 import type { CodeSymbol, FileSymbols } from "../parser/types.js";
+import { getKindPrefix } from "./utils.js";
 
 export interface FileFormatterOptions {
   includeComments: boolean;
@@ -54,31 +55,4 @@ export function formatFile(
   }
 
   return lines.join("\n");
-}
-
-function getKindPrefix(kind: string): string {
-  switch (kind) {
-    case "function":
-    case "method":
-      return "fn";
-    case "class":
-      return "class";
-    case "interface":
-      return "interface";
-    case "type":
-      return "type";
-    case "enum":
-      return "enum";
-    case "struct":
-      return "struct";
-    case "trait":
-      return "trait";
-    case "namespace":
-    case "module":
-      return "namespace";
-    case "constant":
-      return "const";
-    default:
-      return kind;
-  }
 }

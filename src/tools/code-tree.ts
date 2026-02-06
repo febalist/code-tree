@@ -13,6 +13,7 @@ export interface CodeTreeOptions {
   symbols?: boolean | null;
   comments?: boolean | null;
   ignore?: string[];
+  parser?: ParserManager;
 }
 
 const DEFAULT_DEPTH = 10;
@@ -49,8 +50,12 @@ async function handleFile(
 ): Promise<string> {
   const includeComments = options.comments ?? true; // Auto: true for files
 
-  const parser = new ParserManager();
-  await parser.init();
+  // Use provided parser or create a new one
+  let parser = options.parser;
+  if (!parser) {
+    parser = new ParserManager();
+    await parser.init();
+  }
 
   const fileSymbols = await parser.parseFile(filePath);
 
@@ -86,9 +91,12 @@ async function handleDirectory(
     // Limit number of files to parse
     const limitedFiles = filesToParse.slice(0, MAX_FILES_TO_PARSE);
 
-    // Initialize parser
-    const parser = new ParserManager();
-    await parser.init();
+    // Use provided parser or create a new one
+    let parser = options.parser;
+    if (!parser) {
+      parser = new ParserManager();
+      await parser.init();
+    }
 
     // Parse all files
     for (const file of limitedFiles) {
@@ -103,17 +111,25 @@ async function handleDirectory(
   let includeComments = options.comments;
 
   if (includeComments === null || includeComments === undefined) {
-    // Auto mode: try with comments first
-    const withComments = formatDirectory(result, fileSymbolsMap, {
-      includeSymbols,
-      includeComments: true,
-    });
-
-    if (withComments.length <= AUTO_COMMENTS_THRESHOLD) {
-      includeComments = true;
-    } else {
-      includeComments = false;
+    // Auto mode: estimate output size based on docblock lengths
+    let docblockLength = 0;
+    for (const fileSymbols of fileSymbolsMap.values()) {
+      for (const symbol of fileSymbols.symbols) {
+        if (symbol.docblock) {
+          docblockLength += symbol.docblock.length;
+        }
+        if (symbol.children) {
+          for (const child of symbol.children) {
+            if (child.docblock) {
+              docblockLength += child.docblock.length;
+            }
+          }
+        }
+      }
     }
+
+    // If docblocks are small relative to threshold, include them
+    includeComments = docblockLength <= AUTO_COMMENTS_THRESHOLD / 2;
   }
 
   return formatDirectory(result, fileSymbolsMap, {
@@ -122,18 +138,16 @@ async function handleDirectory(
   });
 }
 
-function collectFiles(entry: WalkEntry): WalkEntry[] {
-  const files: WalkEntry[] = [];
-
+function collectFiles(entry: WalkEntry, result: WalkEntry[] = []): WalkEntry[] {
   if (!entry.isDirectory) {
-    files.push(entry);
+    result.push(entry);
   }
 
   if (entry.children) {
     for (const child of entry.children) {
-      files.push(...collectFiles(child));
+      collectFiles(child, result);
     }
   }
 
-  return files;
+  return result;
 }
