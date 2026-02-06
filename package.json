@@ -15,7 +15,8 @@
     "citty": "^0.2.0",
     "ignore": "^7.0.5",
     "tree-sitter-wasms": "^0.1.11",
-    "web-tree-sitter": "~0.25.10"
+    "web-tree-sitter": "~0.25.10",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.14",

@@ -1,7 +1,33 @@
 #!/usr/bin/env bun
 
 import { defineCommand, runMain } from "citty";
+import { z } from "zod";
 import { glance } from "./tools/glance.js";
+
+const CliArgsSchema = z
+  .object({
+    _: z.array(z.string()),
+    depth: z.coerce
+      .number()
+      .pipe(z.int().nonnegative())
+      .optional()
+      .transform((v) => v ?? null),
+    symbols: z
+      .boolean()
+      .optional()
+      .transform((v) => v ?? null),
+    comments: z
+      .boolean()
+      .optional()
+      .transform((v) => v ?? null),
+    ignore: z
+      .union([z.string().transform((s) => [s]), z.array(z.string())])
+      .default([]),
+  })
+  .transform(({ _, ...rest }) => ({
+    ...rest,
+    paths: _.length > 0 ? _ : ["."],
+  }));
 
 const main = defineCommand({
   meta: {
@@ -34,37 +60,22 @@ const main = defineCommand({
     },
   },
   async run({ args }) {
-    // Collect paths: use all positional args, default to current directory
-    const paths = args._.length > 0 ? args._ : ["."];
-
-    // Parse depth
-    let depth: number | null = null;
-    if (args.depth !== undefined) {
-      depth = Number.parseInt(args.depth, 10);
-      if (Number.isNaN(depth) || depth < 0) {
-        console.error(`Error: Invalid depth value: ${args.depth}`);
-        process.exit(1);
-      }
+    const result = CliArgsSchema.safeParse(args);
+    if (!result.success) {
+      const messages = result.error.issues.map((i) => i.message).join("; ");
+      console.error(`Error: ${messages}`);
+      process.exit(1);
     }
 
-    // Normalize ignore patterns (repeated --ignore produces array)
-    const ignore = Array.isArray(args.ignore)
-      ? (args.ignore as string[])
-      : args.ignore
-        ? [args.ignore]
-        : [];
-
-    // Map undefined to null for auto-detection
-    const symbols = args.symbols ?? null;
-    const comments = args.comments ?? null;
+    const { paths, depth, symbols, comments, ignore } = result.data;
 
     const outputs: string[] = [];
     let hasError = false;
 
     for (const path of paths) {
       try {
-        const result = await glance({ path, depth, symbols, comments, ignore });
-        outputs.push(result);
+        const output = await glance({ path, depth, symbols, comments, ignore });
+        outputs.push(output);
       } catch (error) {
         hasError = true;
         const message = error instanceof Error ? error.message : String(error);
