@@ -1,27 +1,24 @@
 import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { Language, Parser as TreeSitter } from "web-tree-sitter";
 import { extractSymbols } from "./extractor.js";
 import { getLanguageByExtension, type LanguageConfig } from "./languages.js";
 import type { FileSymbols } from "./types.js";
+import { grammarWasmPaths, treeSitterWasm } from "./wasm-assets.js";
 
 const MAX_FILE_SIZE = 1024 * 1024; // 1MB
 
 export class ParserManager {
   private parser: TreeSitter | null = null;
   private loadedLanguages = new Map<string, Language>();
-  private wasmBasePath: string;
-
-  constructor() {
-    // Find tree-sitter-wasms package location
-    const wasmsPkg = "tree-sitter-wasms";
-    this.wasmBasePath = join(process.cwd(), "node_modules", wasmsPkg, "out");
-  }
 
   async init() {
     if (this.parser) return;
 
-    await TreeSitter.init();
+    await TreeSitter.init({
+      locateFile() {
+        return treeSitterWasm;
+      },
+    });
     this.parser = new TreeSitter();
   }
 
@@ -34,8 +31,11 @@ export class ParserManager {
     const cached = this.loadedLanguages.get(config.name);
     if (cached) return cached;
 
-    // Load WASM grammar
-    const wasmPath = join(this.wasmBasePath, config.wasmFile);
+    // Load WASM grammar from embedded path
+    const wasmPath = grammarWasmPaths[config.wasmFile];
+    if (!wasmPath) {
+      throw new Error(`No embedded WASM found for ${config.wasmFile}`);
+    }
     const language = await Language.load(wasmPath);
 
     this.loadedLanguages.set(config.name, language);
