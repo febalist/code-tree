@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import ignore from "ignore";
 
-const HARDCODED_IGNORES = [".git", ".svn", ".hg", ".DS_Store"];
+const HARDCODED_IGNORES = [".*/", ".git", ".svn", ".hg", ".DS_Store"];
 
 const DEFAULT_IGNORES = [
   "node_modules",
