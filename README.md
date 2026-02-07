@@ -127,7 +127,7 @@ Add to Claude Code MCP configuration:
   "mcpServers": {
     "code-tree": {
       "command": "bunx",
-      "args": ["@febalist/code-tree", "code-tree-mcp"]
+      "args": ["@febalist/code-tree", "mcp"]
     }
   }
 }

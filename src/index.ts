@@ -144,4 +144,9 @@ async function customShowUsage<
   console.log(sections.join("\n"));
 }
 
-runMain(main, { showUsage: customShowUsage });
+const subcommand = process.argv.slice(2).find((arg) => !arg.startsWith("-"));
+if (subcommand === "mcp") {
+  await import("./mcp.js");
+} else {
+  runMain(main, { showUsage: customShowUsage });
+}
