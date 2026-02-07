@@ -7,10 +7,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `bun install` — install dependencies
 - `bun run start` or `bun run src/index.ts [args]` — run from source
 - `bun run build` — compile to standalone binary (`bun build --compile`)
+- `bun test` — run tests
+- `bun test --watch` — run tests in watch mode
+- `bun test --update-snapshots` — update test snapshots
 - `bun run check` — lint + type-check (`biome check && tsc --noEmit`)
 - `bun run format` — auto-fix lint/format (`biome check --write`)
-
-No test suite exists.
 
 ## Architecture
 

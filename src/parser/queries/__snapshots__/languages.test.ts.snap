@@ -1,0 +1,585 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`language parsing parses sample.ts (typescript) 1`] = `
+[
+  {
+    "docblock": undefined,
+    "kind": "interface",
+    "line": 3,
+    "name": "User",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "type",
+    "line": 9,
+    "name": "ID",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "enum",
+    "line": 12,
+    "name": "Status",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 21,
+        "name": "constructor",
+        "signature": "constructor(name: string)",
+        "visibility": undefined,
+      },
+      {
+        "docblock": "Greet someone",
+        "kind": "method",
+        "line": 26,
+        "name": "greet",
+        "signature": "public greet(): string",
+        "visibility": "public",
+      },
+    ],
+    "docblock": undefined,
+    "kind": "class",
+    "line": 18,
+    "name": "Greeter",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 31,
+    "name": "add",
+    "signature": "export function add(a: number, b: number): number",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.js (javascript) 1`] = `
+[
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 3,
+        "name": "add",
+        "signature": "add(a, b)",
+        "visibility": undefined,
+      },
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 7,
+        "name": "subtract",
+        "signature": "subtract(a, b)",
+        "visibility": undefined,
+      },
+    ],
+    "docblock": undefined,
+    "kind": "class",
+    "line": 2,
+    "name": "Calculator",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 12,
+    "name": "multiply",
+    "signature": "export function multiply(a, b)",
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 16,
+    "name": "divide",
+    "signature": "export const divide = (a, b) => a / b;",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.py (python) 1`] = `
+[
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "function",
+        "line": 2,
+        "name": "__init__",
+        "signature": "def __init__(self, name)",
+        "visibility": undefined,
+      },
+      {
+        "docblock": undefined,
+        "kind": "function",
+        "line": 5,
+        "name": "speak",
+        "signature": "def speak(self)",
+        "visibility": undefined,
+      },
+    ],
+    "docblock": undefined,
+    "kind": "class",
+    "line": 1,
+    "name": "Animal",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 8,
+    "name": "greet",
+    "signature": "def greet(name)",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.go (go) 1`] = `
+[
+  {
+    "docblock": undefined,
+    "kind": "package",
+    "line": 1,
+    "name": "main",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "struct",
+    "line": 3,
+    "name": "User",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "interface",
+    "line": 8,
+    "name": "Stringer",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "method",
+    "line": 12,
+    "name": "String",
+    "signature": "func (u *User) String() string",
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 16,
+    "name": "Add",
+    "signature": "func Add(a, b int) int",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.rs (rust) 1`] = `
+[
+  {
+    "docblock": undefined,
+    "kind": "struct",
+    "line": 1,
+    "name": "Point",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "enum",
+    "line": 6,
+    "name": "Color",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "trait",
+    "line": 12,
+    "name": "Drawable",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "function",
+        "line": 17,
+        "name": "draw",
+        "signature": "fn draw(&self)",
+        "visibility": undefined,
+      },
+    ],
+    "docblock": undefined,
+    "kind": "class",
+    "line": 16,
+    "name": "Point",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 22,
+    "name": "add",
+    "signature": "pub fn add(a: i32, b: i32) -> i32",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.java (java) 1`] = `
+[
+  {
+    "docblock": undefined,
+    "kind": "package",
+    "line": 1,
+    "name": "com.example",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 4,
+        "name": "draw",
+        "signature": "void draw();",
+        "visibility": undefined,
+      },
+    ],
+    "docblock": undefined,
+    "kind": "interface",
+    "line": 3,
+    "name": "Drawable",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "enum",
+    "line": 7,
+    "name": "Status",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 19,
+        "name": "draw",
+        "signature": "@Override public void draw()",
+        "visibility": undefined,
+      },
+    ],
+    "docblock": undefined,
+    "kind": "class",
+    "line": 12,
+    "name": "Shape",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.cs (csharp) 1`] = `
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "docblock": undefined,
+            "kind": "method",
+            "line": 5,
+            "name": "Draw",
+            "signature": "void Draw();",
+            "visibility": undefined,
+          },
+        ],
+        "docblock": undefined,
+        "kind": "interface",
+        "line": 3,
+        "name": "IDrawable",
+        "signature": undefined,
+        "visibility": undefined,
+      },
+      {
+        "docblock": undefined,
+        "kind": "struct",
+        "line": 8,
+        "name": "Point",
+        "signature": undefined,
+        "visibility": undefined,
+      },
+      {
+        "docblock": undefined,
+        "kind": "enum",
+        "line": 14,
+        "name": "Status",
+        "signature": undefined,
+        "visibility": undefined,
+      },
+      {
+        "children": [
+          {
+            "docblock": undefined,
+            "kind": "method",
+            "line": 29,
+            "name": "Draw",
+            "signature": "public void Draw()",
+            "visibility": "public",
+          },
+        ],
+        "docblock": undefined,
+        "kind": "class",
+        "line": 20,
+        "name": "Shape",
+        "signature": undefined,
+        "visibility": undefined,
+      },
+    ],
+    "docblock": undefined,
+    "kind": "namespace",
+    "line": 1,
+    "name": "Geometry",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.rb (ruby) 1`] = `
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "docblock": undefined,
+            "kind": "method",
+            "line": 3,
+            "name": "initialize",
+            "signature": "def initialize(x, y)",
+            "visibility": undefined,
+          },
+          {
+            "docblock": undefined,
+            "kind": "method",
+            "line": 8,
+            "name": "distance",
+            "signature": "def distance Math.sqrt(@x**2 + @y**2)",
+            "visibility": undefined,
+          },
+          {
+            "docblock": undefined,
+            "kind": "method",
+            "line": 12,
+            "name": "origin",
+            "signature": "def self.origin Point.new(0, 0)",
+            "visibility": undefined,
+          },
+        ],
+        "docblock": undefined,
+        "kind": "class",
+        "line": 2,
+        "name": "Point",
+        "signature": undefined,
+        "visibility": undefined,
+      },
+    ],
+    "docblock": undefined,
+    "kind": "namespace",
+    "line": 1,
+    "name": "Geometry",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "method",
+    "line": 18,
+    "name": "greet",
+    "signature": "def greet(name)",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.c (c) 1`] = `
+[
+  {
+    "docblock": undefined,
+    "kind": "type",
+    "line": 1,
+    "name": "Point",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "enum",
+    "line": 6,
+    "name": "Status",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 11,
+    "name": "create_point",
+    "signature": "Point create_point(int x, int y)",
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 16,
+    "name": "add",
+    "signature": "int add(int a, int b)",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.php (php) 1`] = `
+[
+  {
+    "docblock": undefined,
+    "kind": "namespace",
+    "line": 3,
+    "name": "App",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 6,
+        "name": "draw",
+        "signature": "public function draw();",
+        "visibility": "public",
+      },
+    ],
+    "docblock": undefined,
+    "kind": "interface",
+    "line": 5,
+    "name": "Drawable",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 10,
+        "name": "log",
+        "signature": "public function log($message)",
+        "visibility": "public",
+      },
+    ],
+    "docblock": undefined,
+    "kind": "trait",
+    "line": 9,
+    "name": "Logger",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "children": [
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 20,
+        "name": "__construct",
+        "signature": "public function __construct($name)",
+        "visibility": "public",
+      },
+      {
+        "docblock": undefined,
+        "kind": "method",
+        "line": 24,
+        "name": "draw",
+        "signature": "public function draw()",
+        "visibility": "public",
+      },
+    ],
+    "docblock": undefined,
+    "kind": "class",
+    "line": 15,
+    "name": "Shape",
+    "signature": undefined,
+    "visibility": undefined,
+  },
+  {
+    "docblock": undefined,
+    "kind": "function",
+    "line": 29,
+    "name": "add",
+    "signature": "function add($a, $b)",
+    "visibility": undefined,
+  },
+]
+`;
+
+exports[`language parsing parses sample.md (markdown) 1`] = `
+[
+  {
+    "children": [
+      {
+        "kind": "section",
+        "line": 3,
+        "name": "Installation",
+      },
+      {
+        "kind": "section",
+        "line": 7,
+        "name": "Usage",
+      },
+    ],
+    "kind": "section",
+    "line": 1,
+    "name": "Project Title",
+  },
+  {
+    "children": [
+      {
+        "kind": "section",
+        "line": 13,
+        "name": "Functions",
+      },
+    ],
+    "kind": "section",
+    "line": 11,
+    "name": "API Reference",
+  },
+]
+`;

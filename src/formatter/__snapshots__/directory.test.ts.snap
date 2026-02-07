@@ -1,0 +1,53 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`formatDirectory single file in root directory 1`] = `
+"test/
+└── file.ts"
+`;
+
+exports[`formatDirectory multiple files with connectors 1`] = `
+"test/
+├── a.ts
+├── b.ts
+└── c.ts"
+`;
+
+exports[`formatDirectory nested directories 1`] = `
+"test/
+└── src/
+    └── index.ts"
+`;
+
+exports[`formatDirectory symbols rendered under files 1`] = `
+"test/
+└── app.ts
+      function main(): void"
+`;
+
+exports[`formatDirectory symbols with docblocks when comments enabled 1`] = `
+"test/
+└── app.ts
+      /// Greets a person
+      function greet(name: string): string"
+`;
+
+exports[`formatDirectory symbols with docblocks when comments disabled 1`] = `
+"test/
+└── app.ts
+      function greet(name: string): string"
+`;
+
+exports[`formatDirectory truncated result shows message 1`] = `
+"test/
+
+[Truncated: showing 1000 entries. Use 'depth' or 'ignore' parameters to narrow scope.]"
+`;
+
+exports[`formatDirectory empty directory 1`] = `"test/"`;
+
+exports[`formatDirectory class with methods in tree 1`] = `
+"test/
+└── class.ts
+      class Calculator
+        add(a: number, b: number): number"
+`;

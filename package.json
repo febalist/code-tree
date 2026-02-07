@@ -34,6 +34,7 @@
     "start": "bun run src/index.ts",
     "mcp": "bun run src/mcp.ts",
     "build": "bun build src/index.ts --compile --outfile code-tree",
+    "test": "bun test",
     "format": "biome check --write",
     "check": "biome check && tsc --noEmit"
   },

@@ -1,7 +1,7 @@
 import { registerLanguage } from "../languages.js";
 import type { CodeSymbol } from "../types.js";
 
-function extractMarkdownSymbols(content: string): CodeSymbol[] {
+export function extractMarkdownSymbols(content: string): CodeSymbol[] {
   const lines = content.split("\n");
   const symbols: CodeSymbol[] = [];
   let currentH1: CodeSymbol | null = null;

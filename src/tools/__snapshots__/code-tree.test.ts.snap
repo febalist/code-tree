@@ -1,0 +1,92 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`codeTree file mode: parses single TypeScript file 1`] = `
+"/Users/febalist/Projects/code-tree/tests/fixtures/sample.ts
+
+  interface User
+  type ID
+  enum Status
+  class Greeter
+    constructor(name: string)
+    /// Greet someone
+    public greet(): string
+  export function add(a: number, b: number): number"
+`;
+
+exports[`codeTree directory mode: scans fixture project 1`] = `
+"project/
+├── src/
+│   ├── index.ts
+│   │     export function main()
+│   └── utils.ts
+│         export function helper(): string
+│         export function add(a: number, b: number): number
+├── .gitignore
+└── README.md
+      # Test Project
+        # Overview"
+`;
+
+exports[`codeTree symbols disabled shows tree only 1`] = `
+"project/
+├── src/
+│   ├── index.ts
+│   └── utils.ts
+├── .gitignore
+└── README.md"
+`;
+
+exports[`codeTree comments disabled omits docblocks 1`] = `
+"/Users/febalist/Projects/code-tree/tests/fixtures/sample.ts
+
+  interface User
+  type ID
+  enum Status
+  class Greeter
+    constructor(name: string)
+    public greet(): string
+  export function add(a: number, b: number): number"
+`;
+
+exports[`codeTree custom ignore patterns 1`] = `
+"project/
+├── src/
+│   ├── index.ts
+│   │     export function main()
+│   └── utils.ts
+│         export function helper(): string
+│         export function add(a: number, b: number): number
+└── .gitignore"
+`;
+
+exports[`codeTree respects depth limit 1`] = `
+"project/
+├── src/
+├── .gitignore
+└── README.md
+      # Test Project
+        # Overview"
+`;
+
+exports[`codeTree file mode with symbols and comments 1`] = `
+"/Users/febalist/Projects/code-tree/tests/fixtures/sample.ts
+
+  interface User
+  type ID
+  enum Status
+  class Greeter
+    constructor(name: string)
+    /// Greet someone
+    public greet(): string
+  export function add(a: number, b: number): number"
+`;
+
+exports[`codeTree parses markdown file correctly 1`] = `
+"/Users/febalist/Projects/code-tree/tests/fixtures/sample.md
+
+  # Project Title
+    # Installation
+    # Usage
+  # API Reference
+    # Functions"
+`;

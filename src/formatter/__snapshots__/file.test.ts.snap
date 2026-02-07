@@ -1,0 +1,57 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`formatFile simple function 1`] = `
+"example.ts
+
+  fn hello"
+`;
+
+exports[`formatFile function with signature 1`] = `
+"example.ts
+
+  function add(a: number, b: number): number"
+`;
+
+exports[`formatFile with docblock and comments enabled 1`] = `
+"example.ts
+
+  /// Greets a person by name
+  function greet(name: string): string"
+`;
+
+exports[`formatFile with docblock and comments disabled 1`] = `
+"example.ts
+
+  function greet(name: string): string"
+`;
+
+exports[`formatFile with visibility modifier 1`] = `
+"example.ts
+
+  export fn calculate"
+`;
+
+exports[`formatFile class with nested methods 1`] = `
+"example.ts
+
+  export class Calculator
+    add(a: number, b: number): number
+    subtract(a: number, b: number): number"
+`;
+
+exports[`formatFile deeply nested symbols 1`] = `
+"example.ts
+
+  class Outer
+    class Middle
+      fn inner"
+`;
+
+exports[`formatFile multiline docblock 1`] = `
+"example.ts
+
+  /// Calculate something complex
+  /// Takes multiple parameters
+  /// Returns a result
+  fn calculate"
+`;
