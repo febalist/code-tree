@@ -21,6 +21,8 @@ describe("language parsing", () => {
     ["sample.java", "java"],
     ["sample.cs", "csharp"],
     ["sample.rb", "ruby"],
+    ["sample.kt", "kotlin"],
+    ["sample.swift", "swift"],
     ["sample.c", "c"],
     ["sample.php", "php"],
     ["sample.md", "markdown"],
