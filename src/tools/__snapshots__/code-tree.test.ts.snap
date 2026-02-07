@@ -1,7 +1,7 @@
 // Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`codeTree file mode: parses single TypeScript file 1`] = `
-"/Users/febalist/Projects/code-tree/tests/fixtures/sample.ts
+"sample.ts
 
   interface User
   type ID
@@ -37,7 +37,7 @@ exports[`codeTree symbols disabled shows tree only 1`] = `
 `;
 
 exports[`codeTree comments disabled omits docblocks 1`] = `
-"/Users/febalist/Projects/code-tree/tests/fixtures/sample.ts
+"sample.ts
 
   interface User
   type ID
@@ -69,7 +69,7 @@ exports[`codeTree respects depth limit 1`] = `
 `;
 
 exports[`codeTree file mode with symbols and comments 1`] = `
-"/Users/febalist/Projects/code-tree/tests/fixtures/sample.ts
+"sample.ts
 
   interface User
   type ID
@@ -82,7 +82,7 @@ exports[`codeTree file mode with symbols and comments 1`] = `
 `;
 
 exports[`codeTree parses markdown file correctly 1`] = `
-"/Users/febalist/Projects/code-tree/tests/fixtures/sample.md
+"sample.md
 
   # Project Title
     # Installation

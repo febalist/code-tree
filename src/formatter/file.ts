@@ -1,3 +1,4 @@
+import { basename } from "node:path";
 import type { CodeSymbol, FileSymbols } from "../parser/types.js";
 import { getKindPrefix } from "./utils.js";
 
@@ -11,7 +12,7 @@ export function formatFile(
 ): string {
   const lines: string[] = [];
 
-  lines.push(fileSymbols.path);
+  lines.push(basename(fileSymbols.path));
   lines.push("");
 
   function formatSymbol(symbol: CodeSymbol, indent: string = "  ") {
