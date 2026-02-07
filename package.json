@@ -1,6 +1,6 @@
 {
   "name": "code-tree",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "main": "src/index.ts",
   "bin": {
@@ -8,11 +8,13 @@
   },
   "scripts": {
     "start": "bun run src/index.ts",
+    "mcp": "bun run src/mcp.ts",
     "build": "bun build src/index.ts --compile --outfile code-tree",
     "format": "biome check --write",
     "check": "biome check && tsc --noEmit"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "citty": "^0.2.0",
     "ignore": "^7.0.5",
     "tree-sitter-wasms": "^0.1.11",

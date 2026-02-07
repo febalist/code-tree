@@ -113,6 +113,46 @@ Automatically ignored:
 - Patterns from `.gitignore`
 - Custom patterns via `--ignore` parameter
 
+## MCP Server
+
+`code-tree` also provides an MCP (Model Context Protocol) server for integration with LLM clients like Claude Code.
+
+### Running the MCP Server
+
+```bash
+# Start MCP server (stdio transport)
+bun run mcp
+
+# Or use the binary
+bun run src/mcp.ts
+```
+
+### MCP Tool: `code_tree`
+
+Exposes the same functionality as the CLI via MCP protocol.
+
+**Parameters:**
+- `path` (string, required) - Path to file or directory
+- `depth` (number, optional) - Max directory depth (default: 10)
+- `symbols` (boolean, optional) - Include code symbols (default: true)
+- `comments` (boolean, optional) - Include doc comments (default: auto)
+- `ignore` (string[], optional) - Additional ignore patterns
+
+### Integration Example
+
+Add to Claude Code MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "code-tree": {
+      "command": "bun",
+      "args": ["run", "/absolute/path/to/code-tree/src/mcp.ts"]
+    }
+  }
+}
+```
+
 ## Development
 
 ```bash
@@ -121,6 +161,9 @@ bun run check
 
 # Format
 bun biome check --write
+
+# Build CLI binary
+bun run build
 ```
 
 ## Technologies
