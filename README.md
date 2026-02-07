@@ -1,6 +1,6 @@
 # code-tree
 
-A CLI tool for quickly exploring project structure and codebase.
+A CLI tool and MCP server for quickly exploring project structure and codebase.
 
 ## Features
 
@@ -8,36 +8,36 @@ A CLI tool for quickly exploring project structure and codebase.
 - 🔍 Code symbol extraction: classes, functions, interfaces, types
 - 📝 Doc comment support
 - 🚀 Accurate AST parsing via Tree-sitter (WASM)
-- 🎯 12 programming languages: TypeScript, JavaScript, Python, Go, PHP, Rust, Java, C#, Ruby, Kotlin, Swift, C/C++
+- 🎯 10+ programming languages
 - ⚡ Automatic output optimization
 
 ## Installation
 
 ```bash
-bun install
+bun add --global @febalist/code-tree
 ```
 
 ## Usage
 
 ```bash
 # Scan current directory
-bun run src/index.ts .
+code-tree .
 
 # Scan specific directory
-bun run src/index.ts src/
+code-tree src/
 
 # Parse specific file
-bun run src/index.ts src/index.ts
+code-tree src/index.ts
 
 # Multiple paths
-bun run src/index.ts src/ lib/
+code-tree src/ lib/
 
 # With options
-bun run src/index.ts --depth 2 --no-symbols .
-bun run src/index.ts --ignore "*.test.ts" --ignore "*.spec.ts" src/
+code-tree --depth 2 --no-symbols .
+code-tree --ignore "*.test.ts" --ignore "*.spec.ts" src/
 
 # Help
-bun run src/index.ts --help
+code-tree --help
 ```
 
 ## Parameters
@@ -47,16 +47,6 @@ bun run src/index.ts --help
 - `--symbols` / `--no-symbols`: Include/exclude code symbols (default: auto)
 - `--comments` / `--no-comments`: Include/exclude doc comments (default: auto)
 - `--ignore <pattern>`: Additional ignore patterns (repeatable)
-
-## Auto-modes
-
-### `symbols`
-- For files: always `true`
-- For directories: always `true`
-
-### `comments`
-- For files: always `true`
-- For directories: `true` if output ≤ 5000 chars, otherwise `false`
 
 ## Output Examples
 
@@ -103,6 +93,7 @@ src/parser/index.ts
 - Kotlin (.kt, .kts)
 - Swift (.swift)
 - C/C++ (.c, .h, .cpp, .hpp, .cc, .cxx, .hh, .hxx)
+- Markdown (.md, .mdx)
 
 ## File Ignoring
 
@@ -117,26 +108,7 @@ Automatically ignored:
 
 `code-tree` also provides an MCP (Model Context Protocol) server for integration with LLM clients like Claude Code.
 
-### Running the MCP Server
-
-```bash
-# Start MCP server (stdio transport)
-bun run mcp
-
-# Or use the binary
-bun run src/mcp.ts
-```
-
-### MCP Tool: `code_tree`
-
-Exposes the same functionality as the CLI via MCP protocol.
-
-**Parameters:**
-- `path` (string, required) - Path to file or directory
-- `depth` (number, optional) - Max directory depth (default: 10)
-- `symbols` (boolean, optional) - Include code symbols (default: true)
-- `comments` (boolean, optional) - Include doc comments (default: auto)
-- `ignore` (string[], optional) - Additional ignore patterns
+The MCP server exposes the same capabilities and parameters as the CLI.
 
 ### Integration Example
 
@@ -146,30 +118,9 @@ Add to Claude Code MCP configuration:
 {
   "mcpServers": {
     "code-tree": {
-      "command": "bun",
-      "args": ["run", "/absolute/path/to/code-tree/src/mcp.ts"]
+      "command": "bunx",
+      "args": ["@febalist/code-tree"]
     }
   }
 }
 ```
-
-## Development
-
-```bash
-# Check code
-bun run check
-
-# Format
-bun biome check --write
-
-# Build CLI binary
-bun run build
-```
-
-## Technologies
-
-- [Bun](https://bun.sh) - JavaScript runtime
-- [citty](https://github.com/unjs/citty) - CLI framework
-- [web-tree-sitter](https://github.com/tree-sitter/tree-sitter) - AST parsing
-- [tree-sitter-wasms](https://www.npmjs.com/package/tree-sitter-wasms) - WASM grammars
-- [ignore](https://www.npmjs.com/package/ignore) - .gitignore parsing
