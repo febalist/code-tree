@@ -8,6 +8,14 @@
     "code-tree": "src/index.ts",
     "code-tree-mcp": "src/mcp.ts"
   },
+  "files": [
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/__snapshots__"
+  ],
+  "engines": {
+    "bun": ">=1"
+  },
   "keywords": [
     "cli",
     "tree",
@@ -36,7 +44,8 @@
     "build": "bun build src/index.ts --compile --outfile code-tree",
     "test": "bun test",
     "format": "biome check --write",
-    "check": "biome check && tsc --noEmit"
+    "check": "biome check && tsc --noEmit",
+    "prepare": "lefthook install"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.26.0",
@@ -48,10 +57,10 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.14",
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
     "@tsconfig/bun": "^1.0.10",
-    "@types/bun": "^1.1.16"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+    "@types/bun": "^1.1.16",
+    "lefthook": "^1.11.6"
   }
 }

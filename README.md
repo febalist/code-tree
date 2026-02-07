@@ -1,6 +1,11 @@
 # code-tree
 
+[![npm version](https://img.shields.io/npm/v/@febalist/code-tree)](https://www.npmjs.com/package/@febalist/code-tree)
+[![CI](https://github.com/febalist/code-tree/actions/workflows/ci.yml/badge.svg)](https://github.com/febalist/code-tree/actions/workflows/ci.yml)
+
 A CLI tool and MCP server for quickly exploring project structure and codebase.
+
+**Requirements:** Bun
 
 ## Features
 
@@ -14,7 +19,11 @@ A CLI tool and MCP server for quickly exploring project structure and codebase.
 ## Installation
 
 ```bash
-bun add --global @febalist/code-tree
+# Global installation
+bun add -g @febalist/code-tree
+
+# Or use with bunx (no installation needed)
+bunx @febalist/code-tree .
 ```
 
 ## Usage
@@ -118,7 +127,7 @@ Add to Claude Code MCP configuration:
   "mcpServers": {
     "code-tree": {
       "command": "bunx",
-      "args": ["--bun", "@febalist/code-tree", "code-tree-mcp"]
+      "args": ["@febalist/code-tree", "code-tree-mcp"]
     }
   }
 }

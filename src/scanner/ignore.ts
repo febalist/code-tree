@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import ignore from "ignore";
 
@@ -34,7 +33,7 @@ export class IgnoreManager {
 
     try {
       const gitignorePath = join(this.rootPath, ".gitignore");
-      const content = await readFile(gitignorePath, "utf-8");
+      const content = await Bun.file(gitignorePath).text();
       const patterns = content
         .split("\n")
         .map((line) => line.trim())
