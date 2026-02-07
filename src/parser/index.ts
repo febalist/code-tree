@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { extname } from "node:path";
 import { Language, Parser as TreeSitter } from "web-tree-sitter";
 import { extractSymbols } from "./extractor.js";
@@ -58,11 +58,13 @@ export class ParserManager {
     }
 
     try {
-      // Check file size
-      const content = await readFile(filePath, "utf-8");
-      if (content.length > MAX_FILE_SIZE) {
+      // Check file size before reading
+      const stats = await stat(filePath);
+      if (stats.size > MAX_FILE_SIZE) {
         return null; // Skip large files
       }
+
+      const content = await readFile(filePath, "utf-8");
 
       // Use custom extractor if available
       if (config.customExtractor) {

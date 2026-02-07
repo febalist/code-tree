@@ -13,5 +13,5 @@ registerLanguage({
   wasmFile: "tree-sitter-python.wasm",
   extensions: [".py", ".pyw"],
   queryString: query,
-  docCommentPrefixes: ['"""', "'''", "#"],
+  docCommentPrefixes: ["#"],
 });

@@ -1,10 +1,34 @@
 {
   "name": "@febalist/code-tree",
   "version": "1.0.0",
+  "description": "A CLI tool and MCP server for quickly exploring project structure and codebase",
   "type": "module",
   "main": "src/index.ts",
   "bin": {
-    "code-tree": "src/index.ts"
+    "code-tree": "src/index.ts",
+    "code-tree-mcp": "src/mcp.ts"
+  },
+  "keywords": [
+    "cli",
+    "tree",
+    "code",
+    "ast",
+    "parser",
+    "tree-sitter",
+    "mcp",
+    "symbol",
+    "extraction",
+    "codebase"
+  ],
+  "author": "febalist",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/febalist/code-tree.git"
+  },
+  "homepage": "https://github.com/febalist/code-tree#readme",
+  "bugs": {
+    "url": "https://github.com/febalist/code-tree/issues"
   },
   "scripts": {
     "start": "bun run src/index.ts",
@@ -24,7 +48,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.3.14",
     "@tsconfig/bun": "^1.0.10",
-    "@types/bun": "latest"
+    "@types/bun": "^1.1.16"
   },
   "peerDependencies": {
     "typescript": "^5"

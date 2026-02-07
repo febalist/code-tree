@@ -1,3 +1,5 @@
 node_modules/
 *.log
 /code-tree
+.DS_Store
+.idea/

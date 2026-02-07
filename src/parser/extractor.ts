@@ -8,8 +8,6 @@ export function extractSymbols(
   source: string,
   config: LanguageConfig,
 ): CodeSymbol[] {
-  const _symbols: CodeSymbol[] = [];
-
   if (!config.queryString) {
     throw new Error(`Language ${config.name} has no query string configured`);
   }
@@ -90,16 +88,12 @@ export function extractSymbols(
     }
 
     // Extract docblock
-    const docblock = extractDocblock(
-      declNode,
-      source,
-      config.docCommentPrefixes,
-    );
+    const docblock = extractDocblock(declNode, config.docCommentPrefixes);
 
     // Check visibility (for methods/fields)
     let visibility: CodeSymbol["visibility"];
     if (kind === "method" || kind === "function") {
-      visibility = getVisibility(declNode, source);
+      visibility = getVisibility(declNode);
     }
 
     const symbol: CodeSymbol = {
@@ -215,11 +209,7 @@ function getNodeSignature(node: Node, lines: string[]): string {
   return signature;
 }
 
-function extractDocblock(
-  node: Node,
-  _source: string,
-  prefixes: string[],
-): string | null {
+function extractDocblock(node: Node, prefixes: string[]): string | null {
   // Look for preceding sibling comment nodes
   let sibling = node.previousNamedSibling;
 
@@ -253,14 +243,14 @@ function extractDocblock(
         .replace(/^\/\*\*/, "")
         .replace(/\*\/$/, "")
         .replace(/^\/\/\//, "")
-        .replace(/^\s*\*\s?/, "")
+        .replace(/^\s*\*\s?/gm, "") // multiline flag to remove * from all lines
         .trim();
     })
     .join("\n")
     .trim();
 }
 
-function getVisibility(node: Node, _source: string): CodeSymbol["visibility"] {
+function getVisibility(node: Node): CodeSymbol["visibility"] {
   // Check direct children for visibility modifiers
   for (let i = 0; i < node.childCount; i++) {
     const child = node.child(i);

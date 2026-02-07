@@ -8,7 +8,7 @@ A CLI tool and MCP server for quickly exploring project structure and codebase.
 - 🔍 Code symbol extraction: classes, functions, interfaces, types
 - 📝 Doc comment support
 - 🚀 Accurate AST parsing via Tree-sitter (WASM)
-- 🎯 10+ programming languages
+- 🎯 10+ programming languages + Markdown
 - ⚡ Automatic output optimization
 
 ## Installation
@@ -58,7 +58,6 @@ src/
 ├── parser/
 │   ├── index.ts
 │   │     class ParserManager
-│   │       constructor()
 │   │       async init()
 │   │       private async loadLanguage(config: LanguageConfig): Promise<Language>
 │   │       async parseFile(filePath: string): Promise<FileSymbols | null>
@@ -73,8 +72,8 @@ src/
 src/parser/index.ts
 
   class ParserManager
-    constructor()
     async init()
+      locateFile()
     private async loadLanguage(config: LanguageConfig): Promise<Language>
     async parseFile(filePath: string): Promise<FileSymbols | null>
 ```
@@ -100,7 +99,7 @@ src/parser/index.ts
 Automatically ignored:
 
 - `.git`, `.svn`, `.hg`, `.DS_Store` (always)
-- `node_modules`, `dist`, `build`, `.next`, and other standard directories
+- `node_modules`, `vendor`, `dist`, `build`, `__pycache__`, `venv`, `target`, `bin`, `obj`, `coverage`
 - Patterns from `.gitignore`
 - Custom patterns via `--ignore` parameter
 
@@ -119,7 +118,7 @@ Add to Claude Code MCP configuration:
   "mcpServers": {
     "code-tree": {
       "command": "bunx",
-      "args": ["@febalist/code-tree"]
+      "args": ["--bun", "@febalist/code-tree", "code-tree-mcp"]
     }
   }
 }

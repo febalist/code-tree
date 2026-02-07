@@ -2,6 +2,7 @@
 
 import { defineCommand, renderUsage, runMain } from "citty";
 import { z } from "zod";
+import pkg from "../package.json" with { type: "json" };
 import { ParserManager } from "./parser/index.js";
 import { codeTree } from "./tools/code-tree.js";
 
@@ -32,8 +33,8 @@ const CliArgsSchema = z
 
 const main = defineCommand({
   meta: {
-    name: "code-tree",
-    version: "0.1.0",
+    name: pkg.name,
+    version: pkg.version,
     description:
       "Scan project structure and extract code symbols (classes, functions, etc.)",
   },
@@ -136,7 +137,7 @@ async function customShowUsage<
     header("SUPPORTED LANGUAGES"),
     "",
     "  TypeScript, JavaScript, Python, Go, PHP, Rust, Java, C#,",
-    "  Ruby, Kotlin, Swift, C/C++",
+    "  Ruby, Kotlin, Swift, C/C++, Markdown",
     "",
   ];
 

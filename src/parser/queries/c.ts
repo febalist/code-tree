@@ -22,12 +22,3 @@ registerLanguage({
   queryString: query,
   docCommentPrefixes: ["/**", "///"],
 });
-
-// C++ uses the same grammar
-registerLanguage({
-  name: "cpp",
-  wasmFile: "tree-sitter-cpp.wasm",
-  extensions: [".cpp", ".cc", ".cxx", ".hpp", ".hh", ".hxx"],
-  queryString: query,
-  docCommentPrefixes: ["/**", "///"],
-});
