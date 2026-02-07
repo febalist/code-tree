@@ -11,3 +11,4 @@ import "./ruby.js";
 import "./kotlin.js";
 import "./swift.js";
 import "./c.js";
+import "./markdown.js";

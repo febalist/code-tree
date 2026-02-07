@@ -24,6 +24,8 @@ export function getKindPrefix(kind: SymbolKind): string {
       return "const";
     case "package":
       return "package";
+    case "section":
+      return "#";
     default:
       return kind;
   }

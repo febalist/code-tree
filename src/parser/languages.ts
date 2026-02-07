@@ -1,9 +1,12 @@
+import type { CodeSymbol } from "./types.js";
+
 export interface LanguageConfig {
   name: string;
-  wasmFile: string;
+  wasmFile?: string;
   extensions: string[];
-  queryString: string;
+  queryString?: string;
   docCommentPrefixes: string[];
+  customExtractor?: (content: string) => CodeSymbol[];
 }
 
 // Registry mapping file extensions to language configs

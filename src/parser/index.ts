@@ -28,6 +28,10 @@ export class ParserManager {
       throw new Error("Parser not initialized");
     }
 
+    if (!config.wasmFile) {
+      throw new Error(`Language ${config.name} has no WASM file configured`);
+    }
+
     // Check cache
     const cached = this.loadedLanguages.get(config.name);
     if (cached) return cached;
@@ -58,6 +62,16 @@ export class ParserManager {
       const content = await readFile(filePath, "utf-8");
       if (content.length > MAX_FILE_SIZE) {
         return null; // Skip large files
+      }
+
+      // Use custom extractor if available
+      if (config.customExtractor) {
+        const symbols = config.customExtractor(content);
+        return {
+          path: filePath,
+          language: config.name,
+          symbols,
+        };
       }
 
       // Load language and set parser

@@ -10,6 +10,10 @@ export function extractSymbols(
 ): CodeSymbol[] {
   const _symbols: CodeSymbol[] = [];
 
+  if (!config.queryString) {
+    throw new Error(`Language ${config.name} has no query string configured`);
+  }
+
   // Split source into lines once for reuse
   const lines = source.split("\n");
 
@@ -75,6 +79,8 @@ export function extractSymbols(
       kind = "constant";
     } else if (kindName === "package") {
       kind = "package";
+    } else if (kindName === "section") {
+      kind = "section";
     }
 
     // Extract signature (for functions/methods)

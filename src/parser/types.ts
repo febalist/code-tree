@@ -10,7 +10,8 @@ export type SymbolKind =
   | "method"
   | "type"
   | "enum"
-  | "constant";
+  | "constant"
+  | "section";
 
 export interface CodeSymbol {
   name: string;
