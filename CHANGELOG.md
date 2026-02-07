@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/febalist/code-tree/compare/v1.0.0...v1.0.1) (2026-02-07)
+
+
+### Bug Fixes
+
+* support mcp subcommand for bunx integration ([cf6ced5](https://github.com/febalist/code-tree/commit/cf6ced5951d6191a0a75fafefed4f017e85806e5))
+
 ## 1.0.0 (2026-02-07)
 
 
