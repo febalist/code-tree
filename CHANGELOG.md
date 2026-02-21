@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/febalist/code-tree/compare/v1.0.1...v1.0.2) (2026-02-21)
+
+
+### Bug Fixes
+
+* trigger release for refactor changes ([9a9e0ba](https://github.com/febalist/code-tree/commit/9a9e0ba6dfcf38786c7a72d42ccf72370454e816))
+
 ## [1.0.1](https://github.com/febalist/code-tree/compare/v1.0.0...v1.0.1) (2026-02-07)
 
 
