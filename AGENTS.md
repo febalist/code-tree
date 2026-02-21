@@ -36,3 +36,25 @@ Four modules:
 
 - Biome: spaces for indentation, double quotes, recommended lint rules, auto-organized imports
 - All code in English
+
+## Commit Messages
+
+All commits must follow [Conventional Commits](https://www.conventionalcommits.org/) specification. The format is:
+
+```
+type(scope): subject
+
+body
+```
+
+**Types**: `feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `chore`, `ci`, `style`
+**Scope**: Optional, the module/component affected (e.g., `parser`, `scanner`, `formatter`)
+**Subject**: Imperative mood, lowercase, no period, max 50 characters
+**Body**: Detailed explanation, max 100 characters per line
+
+Examples:
+- `feat(parser): add TypeScript support`
+- `fix(scanner): handle symlinks correctly`
+- `refactor: extract option schemas to separate module`
+
+The repository uses commitlint to enforce this format automatically.
