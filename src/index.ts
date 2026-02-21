@@ -4,24 +4,15 @@ import { defineCommand, renderUsage, runMain } from "citty";
 import { z } from "zod";
 import pkg from "../package.json" with { type: "json" };
 import { ParserManager } from "./parser/index.js";
+import { BooleanOptionSchema, DepthOptionSchema } from "./schemas/options.js";
 import { codeTree } from "./tools/code-tree.js";
 
 const CliArgsSchema = z
   .object({
     _: z.array(z.string()),
-    depth: z.coerce
-      .number()
-      .pipe(z.int().nonnegative())
-      .optional()
-      .transform((v) => v ?? null),
-    symbols: z
-      .boolean()
-      .optional()
-      .transform((v) => v ?? null),
-    comments: z
-      .boolean()
-      .optional()
-      .transform((v) => v ?? null),
+    depth: DepthOptionSchema.optional().transform((v) => v ?? null),
+    symbols: BooleanOptionSchema.optional().transform((v) => v ?? null),
+    comments: BooleanOptionSchema.optional().transform((v) => v ?? null),
     ignore: z
       .union([z.string().transform((s) => [s]), z.array(z.string())])
       .default([]),

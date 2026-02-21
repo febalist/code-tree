@@ -5,6 +5,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import pkg from "../package.json" with { type: "json" };
 import { ParserManager } from "./parser/index.js";
+import { BooleanOptionSchema, DepthOptionSchema } from "./schemas/options.js";
 import { codeTree } from "./tools/code-tree.js";
 
 // Shared parser instance for reuse across tool calls
@@ -38,19 +39,13 @@ server.tool(
     path: z
       .string()
       .describe("Path to a file or directory to scan (relative or absolute)"),
-    depth: z
-      .number()
-      .optional()
+    depth: DepthOptionSchema.optional()
       .nullable()
       .describe("Maximum directory depth to scan (default: 10)."),
-    symbols: z
-      .boolean()
-      .optional()
+    symbols: BooleanOptionSchema.optional()
       .nullable()
       .describe("Include code symbols in output (default: true)."),
-    comments: z
-      .boolean()
-      .optional()
+    comments: BooleanOptionSchema.optional()
       .nullable()
       .describe(
         "Include documentation comments (default: auto-detected based on output size)",
