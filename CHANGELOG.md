@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/febalist/code-tree/compare/v1.0.2...v1.0.3) (2026-02-27)
+
+
+### Bug Fixes
+
+* rephrase code_tree tool description for clarity ([d982f8a](https://github.com/febalist/code-tree/commit/d982f8a56bcc88a4171977ba627246b7382d3d5e))
+
 ## [1.0.2](https://github.com/febalist/code-tree/compare/v1.0.1...v1.0.2) (2026-02-21)
 
 
