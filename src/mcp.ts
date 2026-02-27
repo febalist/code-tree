@@ -34,7 +34,7 @@ const server = new McpServer(
 // Register the code_tree tool using v1 SDK API
 server.tool(
   "code_tree",
-  "Scan project structure and extract code symbols (classes, functions, interfaces, etc.) using Tree-sitter AST parsing. Use this tool to understand overall project architecture, find where specific functionality is implemented, locate models/handlers/utilities/etc, or get a quick overview. Supports TypeScript, JavaScript, Python, Go, PHP, Rust, Java, C#, Ruby, Kotlin, Swift, C/C++, and Markdown.",
+  "Scan project structure and extract code symbols (classes, functions, interfaces, etc.) using Tree-sitter AST parsing. Use this tool to explore codebase structure, explore classes and modules, understand overall project architecture, find where specific functionality is implemented, or get a quick overview. Supports TypeScript, JavaScript, Python, Go, PHP, Rust, Java, C#, Ruby, Kotlin, Swift, C/C++, and Markdown.",
   {
     path: z
       .string()
